@@ -48,9 +48,15 @@ If configured, the Dependency-Track tool is used to ingest the files and generat
 # Clone DSAbot repository
 git clone https://github.com/valentinalmiron/dsabot.git
 # Access to DSAbot directory
-cd dsabot
+cd dsabot/src
+# create local environment
+cp .env.template .env
+# edit .env file to update tokens and URLs
+vi .env
 # Install DSAbot dependencies
 npm install
+# run DSAbot
+node index.js
 ```
 
 ## API specification
