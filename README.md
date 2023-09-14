@@ -25,11 +25,10 @@ If configured, the Dependency-Track tool is used to ingest the files and generat
 ## Table of Contents
 1. [Requirements](#requirements)
 2. [How to install](#how-to-install)
-3. [Getting Started](#getting-started)
-4. [User Manual](#user-manual)
+3. [API specification](#api-specification)
+4. [DSAbot diagram](dsabot-diagram)
 5. [Reporting Issues](#reporting-issues)
 6. [Contributing](#contributing)
-
 
 ## Requirements
 1. NodeJS >= 14
@@ -46,18 +45,16 @@ If configured, the Dependency-Track tool is used to ingest the files and generat
 
 ## How to install
 ```
+# Clone DSAbot repository
 git clone https://github.com/valentinalmiron/dsabot.git
-```
-```
+# Access to DSAbot directory
 cd dsabot
-```
-```
+# Install DSAbot dependencies
 npm install
 ```
 
-## Documentation for API Endpoints
-
-All URIs are relative to https://dsabot-url/
+## API specification
+[`openapi-spec.yml`](./src/docs/openapi-spec.yml) 
 
 HTTP request | Description
 ------------ | -------------
@@ -66,7 +63,7 @@ HTTP request | Description
 **GET** /:org:/repos | get All repositories
 **GET** /:org:/:repo/:branch/sbom | Build specific SBOM file for org;repo;branch and ingest into Dependency Track
 
-## Diagram 
+## DSAbot diagram 
  ```mermaid
 graph TD;
     GitHub-WebHook-->DSAbot-API;
@@ -74,3 +71,11 @@ graph TD;
     GitHub-Repository-->DSAbot-API;
     DSAbot-API-->Dependency-Track;
 ```
+
+## Reporting Issues
+To report an issue with DSAbot, please filing bug reports:
+[Reporting Issues and Requesting Features](https://github.com/valentinalmiron/dsabot/issues/new/choose)
+
+## Contributing
+If you are interested in contributing to DSAbot, please check [`CONTRIBUTING.md`](./src/docs/CONTRIBUTING.md) to see how you can help!
+
