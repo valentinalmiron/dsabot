@@ -11,50 +11,59 @@ It is written in Node.js
 1. Receive GitHub Merged PR event with JSON changed information file.
 2. Analyze, Parse and Validate data.
 3. Execute trivy binary to generate SBOM file from repository.
-4. Store the SBOM json file in AWS Bucket S3.
-5. Ingest the SBOM json file in Dependency Track.  
+4. Ingest the SBOM json file in Dependency Track.  
 
 All the transactions should be logged and validated.
 All of the integration process should be encrypted.
 
-This is a Node.js web application that interacts with the GitHub API and AWS S3 to generate and upload SBOM (Software Bill of Materials) files. It also uses a dependency tracking tool called Dependency-Track to ingest the SBOM files and generate reports on the project's dependencies.
+This is a Node.js web application that interacts with the GitHub API to generate and upload SBOM (Software Bill of Materials) files. It also uses a dependency tracking tool called Dependency-Track to ingest the SBOM files and generate reports on the project's dependencies.
 
 The application listens to incoming webhook events from GitHub and uses the data to generate SBOM files for the relevant repository. It can also retrieve a list of all the repositories in an organization and generate SBOM files for each repository.
 
-The SBOM files are uploaded to AWS S3, and if configured, the Dependency-Track tool is used to ingest the files and generate dependency reports. The application has some built-in error handling and logging, and it relies on environment variables for configuration.
+If configured, the Dependency-Track tool is used to ingest the files and generate dependency reports. The application has some built-in error handling and logging, and it relies on environment variables for configuration.
+
+## Table of Contents
+1. [Requirements](#requirements)
+2. [How to install](#how-to-install)
+3. [API specification](#api-specification)
+4. [DSAbot diagram](dsabot-diagram)
+5. [Reporting Issues](#reporting-issues)
+6. [Contributing](#contributing)
 
 ## Requirements
-
 1. NodeJS >= 14
 2. [Github Token](https://docs.github.com/en/enterprise-server@3.6/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) 
     + Readonly to repositories
 2. [Github Webhook](https://docs.github.com/en/rest/orgs/webhooks?apiVersion=2022-11-28)
+    + Payload URL = <dsabot-public-api-endpoint> e.g. https://public-dsabot-main.com/webhook
     + Content type = application/json
     + SSL verification = enable SSL
     + Individual events = Pull requests
-3. [Trivy v0.42.0](https://github.com/aquasecurity/trivy/)
+3. [Trivy v0.42.0](https://github.com/aquasecurity/trivy/) (included in package.json)
 4. [Dependency Track](https://docs.dependencytrack.org/)
 5. Rename the .env.template file to .env and fill in the required information
 
-## Cloning the repository
-
+## How to install
 ```
+# Clone DSAbot repository
 git clone https://github.com/valentinalmiron/dsabot.git
+# Access to DSAbot directory
+cd dsabot
+# Install DSAbot dependencies
+npm install
 ```
-## Documentation for API Endpoints
 
-All URIs are relative to https://dsabot-url/
+## API specification
+[`openapi-spec.yml`](./src/docs/openapi-spec.yml) 
 
 HTTP request | Description
 ------------ | -------------
-**GET** /:org:/repos | get All repositories
-**GET** /:org:/:repo/:branch/sbom | Build specific SBOM file from org;repo;branch to ingest into Dependency Track
-**GET** / | get help
+**POST** /webhook | Receive Payload from GitHub Webhook, create and ingest SBOM into Dependency Track
 **GET** /status | get Status
-**POST** /webhook | Receive GitHub Webhook to ingest SBOM into Dependency Track
+**GET** /:org:/repos | get All repositories
+**GET** /:org:/:repo/:branch/sbom | Build specific SBOM file for org;repo;branch and ingest into Dependency Track
 
-
-## Diagram 
+## DSAbot diagram 
  ```mermaid
 graph TD;
     GitHub-WebHook-->DSAbot-API;
@@ -62,3 +71,11 @@ graph TD;
     GitHub-Repository-->DSAbot-API;
     DSAbot-API-->Dependency-Track;
 ```
+
+## Reporting Issues
+To report an issue with DSAbot, please filing bug reports:
+[Reporting Issues and Requesting Features](https://github.com/valentinalmiron/dsabot/issues/new/choose)
+
+## Contributing
+If you are interested in contributing to DSAbot, please check [`CONTRIBUTING.md`](./src/docs/CONTRIBUTING.md) to see how you can help!
+
