@@ -11,8 +11,7 @@ It is written in Node.js
 1. Receive GitHub Merged PR event with JSON changed information file.
 2. Analyze, Parse and Validate data.
 3. Execute trivy binary to generate SBOM file from repository.
-4. Store the SBOM json file in AWS Bucket S3.
-5. Ingest the SBOM json file in Dependency Track.  
+4. Ingest the SBOM json file in Dependency Track.  
 
 All the transactions should be logged and validated.
 All of the integration process should be encrypted.
