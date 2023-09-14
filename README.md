@@ -44,22 +44,27 @@ If configured, the Dependency-Track tool is used to ingest the files and generat
 4. [Dependency Track](https://docs.dependencytrack.org/)
 5. Rename the .env.template file to .env and fill in the required information
 
-## Cloning the repository
+## How to install
 ```
 git clone https://github.com/valentinalmiron/dsabot.git
 ```
+```
+cd dsabot
+```
+```
+npm install
+```
+
 ## Documentation for API Endpoints
 
 All URIs are relative to https://dsabot-url/
 
 HTTP request | Description
 ------------ | -------------
-**GET** /:org:/repos | get All repositories
-**GET** /:org:/:repo/:branch/sbom | Build specific SBOM file from org;repo;branch to ingest into Dependency Track
-**GET** / | get help
+**POST** /webhook | Receive Payload from GitHub Webhook, create and ingest SBOM into Dependency Track
 **GET** /status | get Status
-**POST** /webhook | Receive GitHub Webhook to ingest SBOM into Dependency Track
-
+**GET** /:org:/repos | get All repositories
+**GET** /:org:/:repo/:branch/sbom | Build specific SBOM file for org;repo;branch and ingest into Dependency Track
 
 ## Diagram 
  ```mermaid
