@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: InfoSec Tool - Bot NodeJS App
+  version: 1.0.1
+servers:
+  - url: https://<dsabot-url>/
+paths:
+  /:
+    get:
+      summary: Root endpoint
+      description: Return information about available endpoints
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              example: InfoSec Tool - Bot NodeJS App: ...
+  /status:
+    get:
+      summary: Status endpoint
+      description: Return status of the process
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              example: The process was completed
+  /{org}/repos:
+    get:
+      summary: Get all repositories in the organization
+      description: Retrieve organization repositories from GitHub API
+      parameters:
+        - name: org
+          in: path
+          required: true
+          description: GitHub organization name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              example: The process was completed
+  /{org}/{repo}/{branch}/sbom:
+    get:
+      summary: Generate SBOM file for the Org, Repo, and Branch
+      description: Perform SCA process for the repository and branch
+      parameters:
+        - name: org
+          in: path
+          required: true
+          description: GitHub organization name
+          schema:
+            type: string
+        - name: repo
+          in: path
+          required: true
+          description: GitHub repository name
+          schema:
+            type: string
+        - name: branch
+          in: path
+          required: true
+          description: Repository branch name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              example: Process completed
+  /webhook:
+    post:
+      summary: Webhook endpoint
+      description: Receive and process GitHub webhook JSON payload
+      responses:
+        '201':
+          description: Received and processing
