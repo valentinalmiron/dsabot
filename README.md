@@ -16,27 +16,35 @@ It is written in Node.js
 All the transactions should be logged and validated.
 All of the integration process should be encrypted.
 
-This is a Node.js web application that interacts with the GitHub API and AWS S3 to generate and upload SBOM (Software Bill of Materials) files. It also uses a dependency tracking tool called Dependency-Track to ingest the SBOM files and generate reports on the project's dependencies.
+This is a Node.js web application that interacts with the GitHub API to generate and upload SBOM (Software Bill of Materials) files. It also uses a dependency tracking tool called Dependency-Track to ingest the SBOM files and generate reports on the project's dependencies.
 
 The application listens to incoming webhook events from GitHub and uses the data to generate SBOM files for the relevant repository. It can also retrieve a list of all the repositories in an organization and generate SBOM files for each repository.
 
-The SBOM files are uploaded to AWS S3, and if configured, the Dependency-Track tool is used to ingest the files and generate dependency reports. The application has some built-in error handling and logging, and it relies on environment variables for configuration.
+If configured, the Dependency-Track tool is used to ingest the files and generate dependency reports. The application has some built-in error handling and logging, and it relies on environment variables for configuration.
+
+## Table of Contents
+1. [Requirements](#requirements)
+2. [How to install](#how-to-install)
+3. [Getting Started](#getting-started)
+4. [User Manual](#user-manual)
+5. [Reporting Issues](#reporting-issues)
+6. [Contributing](#contributing)
+
 
 ## Requirements
-
 1. NodeJS >= 14
 2. [Github Token](https://docs.github.com/en/enterprise-server@3.6/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) 
     + Readonly to repositories
 2. [Github Webhook](https://docs.github.com/en/rest/orgs/webhooks?apiVersion=2022-11-28)
+    + Payload URL = <dsabot-public-api-endpoint> e.g. https://public-dsabot-main.com/webhook
     + Content type = application/json
     + SSL verification = enable SSL
     + Individual events = Pull requests
-3. [Trivy v0.42.0](https://github.com/aquasecurity/trivy/)
+3. [Trivy v0.42.0](https://github.com/aquasecurity/trivy/) (included in package.json)
 4. [Dependency Track](https://docs.dependencytrack.org/)
 5. Rename the .env.template file to .env and fill in the required information
 
 ## Cloning the repository
-
 ```
 git clone https://github.com/valentinalmiron/dsabot.git
 ```
